@@ -1,0 +1,163 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+
+
+int main()
+{
+	//Greet user
+	cout << "Welcome to El Camino Software Engineering Lab\n";
+	cout << "We will calculate average carbon footprint and corresponding fine per city\n";
+	//Ask for input file name:
+	cout << "Enter full path to input file:";
+	string inputFileName;
+	getline(cin, inputFileName);
+	//Declare ifstream object that would bind to file name
+	ifstream in(inputFileName);//Ready to read if file name is correct
+//We always do the test that file name is correct and file can be opened
+
+	if (!in.is_open())
+	{
+		cout << "Failed to open file. Exiting program" << endl;
+	}
+	else
+	{
+		string outfileName;
+		cout << "Enter full path to output file: ";
+		getline(cin, outfileName);
+		ofstream out(outfileName, ios::app);//Opens output file in append mode and does not delete previous data
+		//validation for output file
+
+		if (!out.is_open())
+		{
+			cout << "Failed to open output file." << endl;
+		}
+		else // Both input and output files opened successfully. Can process data now
+		{
+			//Apply the formatting flags to console and file outputs
+			cout << fixed << showpoint << setprecision(2);
+			out << fixed << showpoint << setprecision(2);
+
+			//File could be like below
+			//Jill Quirk 90 85 89 75
+
+
+			//Miss Genius
+
+
+			//Reading token by token
+
+			//Variables to capture properties of entire file
+			int sumCity{ 0 };// Number of cities in entire input file
+			double totalFine{ 0.0 };// sum of all fines for all cities
+			int sampleAmt{ 0 };
+
+			while (in.peek() != EOF)
+
+			{
+				sumCity++;
+				string cityName;
+				in >> cityName;
+				cout << "Your City Name: " << cityName << endl;
+				out << "Your City Name: " << cityName << endl;
+				//scores are int so I will use int variable for scores
+				int OneScore{ 0 };
+				int sumCity{ 0 };
+				int sumCarbon{ 0 };
+				double fineAmt{ 0.0 };
+				int sampleAmt{ 0 };
+				in >> OneScore;//prime read for sentinel loop
+				/**************************************
+				sum 90 + 85 + 89 + 75 = 339
+				*****************************************/
+				/**************************************
+
+				numTests 1 + 1 + 1 + 1 = 4
+				*****************************************/
+				while (OneScore >= 0)
+
+				{
+					cout << OneScore << " ";
+					out << OneScore << " ";
+
+					sumCarbon += OneScore;
+					sampleAmt++;
+					in >> OneScore;//update read
+
+				}// end of sentinel loop that began on line 76
+				cout << endl;
+				out << endl;
+				if (sampleAmt > 0)// To avoid division by zero
+
+				{
+					double Average = static_cast<double> (sumCarbon) / sumCity;
+					int roundedAvg = round(Average);
+
+					//Print all data and assign grade
+					cout << "Sum of all your Carbon FP's: " << sumCarbon << endl;
+					cout << "Number of Carbon Footprints:" << sampleAmt << endl;
+					cout << "Real average of all your Carbon FP's: " << Average << endl;
+					cout << "Rounded mean of all your Carbon FP's: " << roundedAvg << endl;
+
+					out << "Sum of all your Carbon FP's: " << sumCarbon << endl;
+					out << "Number of Carbon Footprints:" << sampleAmt << endl;
+					out << "Real average of all your Carbon FP's: " << Average << endl;
+					out << "Rounded mean of all your Carbon FP's: " << roundedAvg << endl;
+
+
+					if (roundedAvg <= 1)
+					{
+						fineAmt = 0.00;
+						sumCity++;
+						totalFine += fineAmt;
+					}
+					else if (roundedAvg > 1 && roundedAvg <= 3)
+					{
+						fineAmt = 1000000.00;
+						sumCity++;
+						totalFine += fineAmt;
+
+					}
+					else if (roundedAvg > 3 && roundedAvg <= 5)
+					{
+						fineAmt = 2000000.00;
+						sumCity++;
+						totalFine += fineAmt;
+					}
+					else if (roundedAvg > 5 && roundedAvg <= 7)
+
+					{
+						fineAmt = 3000000.00;
+						sumCity++;
+						totalFine += fineAmt;
+
+
+					}
+					else
+					{
+						fineAmt = 4500000.00;
+						sumCity++;
+						totalFine += fineAmt;
+
+					}
+				}
+			}
+
+		}//end of outer while loop
+		cout << "Total Number of Cities in File " << sampleAmt << endl;
+		out << "Total Number of Cities in File " << sampleAmt << endl;
+		cout << "Total amount of fine collected: " << totalFine << endl;
+		out << "Number of students who took no tests: " << totalFine << endl;
+		out.close();
+
+	}// end of else block that started on line 25
+	in.close();
+
+	cout << "Thank you for using El Camino College Software Engineering Lab" << endl;
+
+	system("pause");
+	return 0;
+}
